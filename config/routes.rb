@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
+  
+  
+  root :to => "jobs#index"
+  
+  devise_for :users
   resources :jobs
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
