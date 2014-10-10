@@ -23,13 +23,14 @@ ActiveRecord::Schema.define(version: 20141002030827) do
     t.string   "title"
     t.text     "description"
     t.integer  "user_id"
-    t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "company_name"
     t.string   "url"
     t.string   "email"
-    t.integer  "category_id",  default: 1
+    t.string   "location"
+    t.text     "apply_instruction"
+    t.integer  "category_id",       default: 1
   end
 
   create_table "users", force: true do |t|
