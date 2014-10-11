@@ -3,7 +3,9 @@ class Job < ActiveRecord::Base
   belongs_to :category, :counter_cache => true
 
   scope :published,  -> { where(:is_published => true ) }
+  scope :recent, -> { order("id DESC") }
 
+  
   include Tokenable
 
   validates :title, :presence => true
