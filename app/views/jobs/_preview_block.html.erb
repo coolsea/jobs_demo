@@ -10,7 +10,7 @@
   <hr>
 
   <p>
-    <%= render_job_description(@job.description) %>
+    <%= render_job_description(@job) %>
   </p>
 
   <br>
@@ -18,7 +18,7 @@
   <div class="well">
     <h4> 應徵方法 </h4>
     <p>
-      <%= render_job_description(@job.apply_instruction) %>
+      <%= render_job_apply_instruction(@job) %>
     </p>
 
   </div>
