@@ -12,14 +12,14 @@
 
     <%= f.input :category_id, :collection => @categories ,    as: :radio_buttons, :checked => @categories[0] %>
      
-     <%= f.input :lower_bound, :label => 'Postal code, house number', :wrapper => :prepend_append do  %>
-         <%= f.input_field :lower_bound %>
-         <%= f.input_field :higher_bound %>
+     <%= f.input :lower_bound , :label => '薪水' do  %>
+         <%= f.input_field :lower_bound, :as => :string, placeholder: '下限 (Lower bound)' %> ~
+         <%= f.input_field :higher_bound, :as => :string, placeholder: '上限 (Higher bound)' %>
      <% end %>
 
-<%= f.input :location, :label => "工作地點", :hint => "“Chicago, IL”, “Stockholm, Sweden”" %>
+<%= f.input :location, :label => "工作地點", :hint => "臺北 / 高雄 / 上海 / ...etc." %>
     <%= f.input :description, :label => "工作敘述", :input_html => { :rows => 10 } %>
-    <%= f.input :apply_instruction, :label => "如何應徵", :hint => "Example: Send a resume to jane@company.com" , :input_html => { :rows => 3 } %>
+<%= f.input :apply_instruction, :label => "如何應徵", :hint => "Example: Send a resume to wei_918@coolsea.net" , :input_html => { :rows => 3 } %>
 
 
       <h4 class="instruction"> &nbsp; &nbsp;&nbsp;介紹你的公司 </h4>

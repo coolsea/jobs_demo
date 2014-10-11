@@ -13,6 +13,7 @@ namespace :dev do
     Category.create!(:name => "行銷 / 企劃")
   end
 
+
   task :fake => :environment do 
 
     Category.all.each do |c|
@@ -34,7 +35,10 @@ namespace :dev do
     job.company_name = "#{Faker::Name.first_name} Inc."
     job.email = Faker::Internet.email
     job.url = Faker::Internet.url
+    job.lower_bound = 30000 
+    job.higher_bound = 66000 + rand(200000)
     job.is_published = true
+
 
     job.save
   end
