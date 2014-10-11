@@ -1,76 +1,72 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :edit, :update, :destroy]
 
-  #before_action :login_required, :only => [:create, :new, :update, :edit, :destroy]
-  
-  # GET /jobs
-  # GET /jobs.json
   def index
-    @jobs = Job.all
+    @categories = Category.all
   end
 
   # GET /jobs/1
   # GET /jobs/1.json
   def show
+    @job = Job.find(params[:id])
   end
 
   # GET /jobs/new
   def new
-    @job = Job.new
+    if params[:token].present?
+      @job = Job.where(:token => params[:token]).first
+
+      if @job.blank?
+        @job = Job.new
+      end
+
+    else
+      @job = Job.new
+    end
   end
 
   # GET /jobs/1/edit
   def edit
   end
 
-  # POST /jobs
-  # POST /jobs.json
-  def create
-    @job = Job.new(job_params)
 
-    respond_to do |format|
-      if @job.save
-        format.html { redirect_to @job, notice: 'Job was successfully created.' }
-        format.json { render :show, status: :created, location: @job }
-      else
-        format.html { render :new }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  def preview
 
-  # PATCH/PUT /jobs/1
-  # PATCH/PUT /jobs/1.json
-  def update
-    respond_to do |format|
+    if params[:job][:token].present?
+      @job = Job.find_by_token(params[:job][:token])
       if @job.update(job_params)
-        format.html { redirect_to @job, notice: 'Job was successfully updated.' }
-        format.json { render :show, status: :ok, location: @job }
+        render :preview
       else
-        format.html { render :edit }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
+        render :new
+      end
+    else
+
+      @job = Job.new(job_params)
+
+      if !@job.save
+        render :new
       end
     end
+
   end
 
-  # DELETE /jobs/1
-  # DELETE /jobs/1.json
-  def destroy
-    @job.destroy
-    respond_to do |format|
-      format.html { redirect_to jobs_url, notice: 'Job was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  def publish
+    @job = Job.find_by_token(params[:id])
+
+    @job.publish!
+
+    redirect_to root_path
   end
+
+  def final
+    @job = Job.find_by_token(params[:token])
+  end
+
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_job
-      @job = Job.find(params[:id])
-    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
-      params.require(:job).permit(:title, :description, :user_id)
+      params.require(:job).permit(:title, :description, :location , :company_name, :category_id , :apply_instruction, :url, :email)
     end
-end
+  end

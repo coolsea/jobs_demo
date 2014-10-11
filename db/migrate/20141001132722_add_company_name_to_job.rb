@@ -5,5 +5,8 @@ class AddCompanyNameToJob < ActiveRecord::Migration
     add_column :jobs, :email, :string
     add_column :jobs, :location, :string
     add_column :jobs, :apply_instruction, :text
+    add_column :jobs, :created_on, :date
+    add_column :jobs, :update_on, :date 
+
   end
 end
