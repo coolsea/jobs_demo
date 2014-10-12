@@ -24,6 +24,7 @@ RailsAdmin.config do |config|
       field :token
       field :is_published
       field :ip
+      field :apply_instruction
 
     end
   end

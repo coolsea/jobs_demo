@@ -48,4 +48,13 @@ module JobsHelper
       job.company_human_name
     end
   end
+
+
+  def render_job_warning(salary)
+    if salary < 35000
+      "[最低薪 < 35000 請自行斟酌是否應徵此公司]"
+    end
+  end
+
+
 end

@@ -4,9 +4,14 @@ class PublishJobService
   end
 
 
-  def perform!
+  def publish!
     @job.publish!
     JobMailer.deliver_email_for_edit(@job).deliver
-
   end
+
+  def send_verfication_email!
+    JobMailer.deliver_email_for_verification(@job).deliver
+  end
+
+
 end

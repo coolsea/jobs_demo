@@ -10,9 +10,11 @@ class JobsController < ApplicationController
   # GET /jobs/1.json
   def show
     @job = Job.published.find(params[:id])
+
     set_page_title @job.og_title
     set_page_description @job.og_description
   end
+
 
   # GET /jobs/new
   def new
@@ -28,23 +30,10 @@ class JobsController < ApplicationController
     end
   end
 
-  # GET /jobs/1/edit
-  def edit
-    @job = Job.find_by_token(params[:id])
-  end
-
-  def update
-    @job = Job.find_by_token(params[:id])
-    if @job.update(job_params_for_edit)
-      flash[:notice] = "修改成功"
-      redirect_to job_path(@job)
-    else
-      render :new
-    end
-  end
 
 
-    def preview
+
+  def preview
 
     if params[:job][:token].present?
       @job = Job.find_by_token(params[:job][:token])
@@ -65,19 +54,43 @@ class JobsController < ApplicationController
 
   end
 
+  def edit
+    @job = Job.find_by_token(params[:id])
+  end
+
+  def update
+    @job = Job.find_by_token(params[:id])
+    if @job.update(job_params_for_edit)
+      flash[:notice] = "修改成功"
+      redirect_to job_path(@job)
+    else
+      render :new
+    end
+  end
+
+
   def publish
     @job = Job.find_by_token(params[:id])
 
-
-    ip_count = Job.where(:created_on => Date.today, :is_published => true, :ip => request.ip ).count
-
-   # if ip_count > 1
-   #   flash[:error] = "一天不能張貼超過一則資訊"
-   # else
-      PublishJobService.new(@job).perform!
-   # end
+    flash[:notice] = "感謝您刊登此資訊，我們會寄一封信件到您信箱確認您刊登 email 有效，等您驗證過後，職缺會立即刊登"
+    PublishJobService.new(@job).send_verfication_email!
 
     redirect_to root_path
+
+  end
+
+  def verify
+    @job = Job.find_by_token(params[:id])
+
+    if @job.verified?
+      flash[:error] = "你已經驗證過了"
+      redirect_to root_path
+    else
+      @job.verify!
+      PublishJobService.new(@job).publish!
+      flash[:notice] = "驗證通過。您的職缺已順利刊登！"
+      redirect_to job_path(@job)
+    end
   end
 
   def final
@@ -114,7 +127,7 @@ class JobsController < ApplicationController
     params.require(:job).permit(:lower_bound, :higher_bound, :title, :description, :location , :company_name, :category_id , :apply_instruction, :url, :email)
   end
 
-   def job_params_for_edit
+  def job_params_for_edit
     params.require(:job).permit(:is_published,:lower_bound, :higher_bound, :title, :description, :location , :company_name, :category_id , :apply_instruction, :url, :email)
   end
 end
