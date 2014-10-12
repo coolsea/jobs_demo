@@ -1,6 +1,5 @@
 <%= simple_form_for @job , :url => preview_jobs_path,  html: { class: 'form-horizontal' } , :wrapper => :horizontal_form,  :wrapper_mappings => {    check_boxes: :horizontal_radio_and_checkboxes,    radio_buttons: :horizontal_radio_and_checkboxes,    file: :horizontal_file_input,    boolean: :horizontal_boolean } do |f| %>
 
-
        <h4 class="instruction"> &nbsp; &nbsp;&nbsp;第一步，告訴我們詳細資訊 </h4>
        <br><br>
 
@@ -8,17 +7,17 @@
 
 
     <% @categories = Category.all.map{ |c| [c.name, c.id] } %>
-  
+
 
     <%= f.input :category_id, :collection => @categories ,    as: :radio_buttons, :checked => @categories[1] %>
-     
+
      <%= f.input :lower_bound , :label => '薪水' do  %>
          <%= f.input_field :lower_bound, :as => :string, placeholder: '下限 (Lower bound)' %> ~
          <%= f.input_field :higher_bound, :as => :string, placeholder: '上限 (Higher bound)' %>
      <% end %>
 
 <%= f.input :location, :label => "工作地點", :hint => "臺北 / 高雄 / 上海 / ...etc." %>
-    <%= f.input :description, :label => "工作敘述", :input_html => { :rows => 10 }, :hint => "使用 Markdown 語法" %>
+<%= f.input :description, :label => "工作敘述", :input_html => { :rows => 10, :data => { :provide => "markdown"} }, :hint => "使用 Markdown 語法" %>
 <%= f.input :apply_instruction, :label => "如何應徵", :hint => "Example: Send a resume to wei_918@coolsea.net" , :input_html => { :rows => 3 } %>
 
 
@@ -39,6 +38,5 @@
       <div class="col-sm-11">
           <%= f.submit "預覽徵才啟事" , :class => "btn btn-lg btn-danger" %>
       </div>
-    </div>  
+    </div>
 <% end %>
- 

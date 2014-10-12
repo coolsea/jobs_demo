@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
 
   before_filter :validate_search_key , :only => [:search]
-  
+
   def index
     @categories = Category.all
   end
@@ -44,7 +44,7 @@ class JobsController < ApplicationController
   end
 
 
-  def preview
+    def preview
 
     if params[:job][:token].present?
       @job = Job.find_by_token(params[:job][:token])
@@ -56,6 +56,7 @@ class JobsController < ApplicationController
     else
 
       @job = Job.new(job_params)
+      @job.ip = request.remote_ip
 
       if !@job.save
         render :new
@@ -67,7 +68,14 @@ class JobsController < ApplicationController
   def publish
     @job = Job.find_by_token(params[:id])
 
-    @job.publish!
+
+    ip_count = Job.where(:created_on => Date.today, :is_published => true, :ip => request.ip ).count
+
+   # if ip_count > 1
+   #   flash[:error] = "一天不能張貼超過一則資訊"
+   # else
+      PublishJobService.new(@job).perform!
+   # end
 
     redirect_to root_path
   end
@@ -84,7 +92,7 @@ class JobsController < ApplicationController
       set_page_title "搜尋 #{@query_string}"
     end
   end
-  
+
 
   protected
 
@@ -105,7 +113,7 @@ class JobsController < ApplicationController
   def job_params
     params.require(:job).permit(:lower_bound, :higher_bound, :title, :description, :location , :company_name, :category_id , :apply_instruction, :url, :email)
   end
-  
+
    def job_params_for_edit
     params.require(:job).permit(:is_published,:lower_bound, :higher_bound, :title, :description, :location , :company_name, :category_id , :apply_instruction, :url, :email)
   end

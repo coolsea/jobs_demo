@@ -13,9 +13,9 @@ class Job < ActiveRecord::Base
   validates :title, :presence => true
   validates :description, :presence => true
   validates :location, :presence => true
-  
+
   validates :url, :url => true, :allow_blank => true
-  
+
   validates :email, :email => true
 
   validate :check_salary, fields: [:lower_bound, :higher_bound]
@@ -24,7 +24,7 @@ class Job < ActiveRecord::Base
   def og_description
     content = []
     content << description if description.present?
-    
+
 
     str = truncate(content.first, :length => 150 )
 
@@ -35,9 +35,17 @@ class Job < ActiveRecord::Base
     ERB::Util.h("#{title} - #{company_name} - 最高薪水 #{higher_bound}")
   end
 
+  def company_human_name
+    if company_name.present?
+      company_name
+    else
+       "（匿名）"
+    end
+  end
+
 
   def check_salary
-    if lower_bound.blank? 
+    if lower_bound.blank?
       errors.add(:lower_bound, "最低薪水不能為空")
     end
 

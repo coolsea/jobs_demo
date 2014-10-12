@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011062350) do
+ActiveRecord::Schema.define(version: 20141012084037) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -33,11 +33,12 @@ ActiveRecord::Schema.define(version: 20141011062350) do
     t.text     "apply_instruction"
     t.date     "created_on"
     t.date     "update_on"
-    t.integer  "category_id",       default: 1
+    t.integer  "category_id",                  default: 1
     t.integer  "lower_bound"
     t.integer  "higher_bound"
     t.string   "token"
     t.boolean  "is_published"
+    t.string   "ip",                limit: 30
   end
 
   add_index "jobs", ["is_published"], name: "index_jobs_on_is_published"

@@ -57,31 +57,10 @@ gem 'rails-bootstrap-markdown'
 
 gem "whenever"
 
-group :development do 
-  gem "letter_opener"
-  gem "cape"
-  gem "better_errors"
-  gem "annotate"
-end
 
-
-
-group :production do 
+group :production do
   gem "mysql2"
 end
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
-# 所有環境都綁，包含 production
 
 gem "pry-rails"
 gem "awesome_print", :require => false
@@ -94,5 +73,9 @@ group :development, :test do # 也包含 test 是為了讓寫 test case 時也�
 end
 
 group :development do
+  gem "letter_opener"
+  gem "cape"
+  gem "better_errors"
+  gem "annotate"
   gem "pry-remote"
 end

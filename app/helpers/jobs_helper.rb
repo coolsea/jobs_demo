@@ -13,11 +13,11 @@ module JobsHelper
   def render_job_apply_instruction(job)
     job.apply_instruction.to_markdown
   end
-  
+
   def render_job_url(job)
-    link_to(job.url, job.url) 
+    link_to(job.url, job.url)
   end
-  
+
   def render_job_salary(salary)
 
     special_label = if salary > 200000
@@ -35,14 +35,14 @@ module JobsHelper
       content_tag(:span, "NEW", :class => "label label-success")
     end
   end
-  
- def render_job_company_name(job)
-    if job.company_name.present?
-      job.company_name
+
+  def render_job_company_name(job)
+    if job.url.present?
+      link_to(job.company_human_name, job.url, :target => "_blank")
     else
-      "（匿名）"
+      job.company_human_name
     end
   end
 
-  
+
 end
