@@ -10,10 +10,8 @@ class JobsController < ApplicationController
   # GET /jobs/1.json
   def show
     @job = Job.find(params[:id])
-    set_page_title "#{@job.title} - #{@job.company_name} - 最高薪水 #{@job.higher_bound}"
-  end
-
-  def search
+    set_page_title @job.og_title
+    set_page_description @job.og_description
   end
 
   # GET /jobs/new
@@ -32,6 +30,17 @@ class JobsController < ApplicationController
 
   # GET /jobs/1/edit
   def edit
+    @job = Job.find_by_token(params[:id])
+  end
+
+  def update
+    @job = Job.find_by_token(params[:id])
+    if @job.update(job_params_for_edit)
+      flash[:notice] = "修改成功"
+      redirect_to job_path(@job)
+    else
+      render :new
+    end
   end
 
 
@@ -72,6 +81,7 @@ class JobsController < ApplicationController
     if @query_string.present?
       search_result = Job.ransack(@search_criteria).result(:distinct => true)
       @jobs = search_result.paginate(:page => params[:page], :per_page => 20 )
+      set_page_title "搜尋 #{@query_string}"
     end
   end
   
@@ -94,5 +104,9 @@ class JobsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_params
     params.require(:job).permit(:lower_bound, :higher_bound, :title, :description, :location , :company_name, :category_id , :apply_instruction, :url, :email)
+  end
+  
+   def job_params_for_edit
+    params.require(:job).permit(:is_published,:lower_bound, :higher_bound, :title, :description, :location , :company_name, :category_id , :apply_instruction, :url, :email)
   end
 end

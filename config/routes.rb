@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
   
+  get "/pages/:action" , :controller => "pages"
+
   mount RailsAdmin::Engine => '/cadmin', as: 'rails_admin'
   root :to => "jobs#index"
   

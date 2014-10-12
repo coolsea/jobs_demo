@@ -10,7 +10,7 @@
     <% @categories = Category.all.map{ |c| [c.name, c.id] } %>
   
 
-    <%= f.input :category_id, :collection => @categories ,    as: :radio_buttons, :checked => @categories[0] %>
+    <%= f.input :category_id, :collection => @categories ,    as: :radio_buttons, :checked => @categories[1] %>
      
      <%= f.input :lower_bound , :label => '薪水' do  %>
          <%= f.input_field :lower_bound, :as => :string, placeholder: '下限 (Lower bound)' %> ~
@@ -18,7 +18,7 @@
      <% end %>
 
 <%= f.input :location, :label => "工作地點", :hint => "臺北 / 高雄 / 上海 / ...etc." %>
-    <%= f.input :description, :label => "工作敘述", :input_html => { :rows => 10 } %>
+    <%= f.input :description, :label => "工作敘述", :input_html => { :rows => 10 }, :hint => "使用 Markdown 語法" %>
 <%= f.input :apply_instruction, :label => "如何應徵", :hint => "Example: Send a resume to wei_918@coolsea.net" , :input_html => { :rows => 3 } %>
 
 

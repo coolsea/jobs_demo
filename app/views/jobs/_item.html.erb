@@ -1,10 +1,11 @@
-
      <tr>
         <td width="80%">
-          <%= render_job_fresh_state(job) %> <%= render_job_title(job) %>
+           <%= render_job_fresh_state(job) %>
+           <%= render_job_company_name(job) %> -
+           <%= render_job_title(job) %>
         </td>
         <td width="5%">
-          <%= render_job_salary(job) %>
+          <%= render_job_salary(job.higher_bound) %>
         </td>
         <td> <%= job.created_on.to_s(:short) %> </td>
       </tr>
