@@ -11,8 +11,10 @@
  * file per style scope.
  *
 
+
  *= require_self
  *= require jobs
+ *= require hero
  *= require bootstrap-markdown
  *= require bootstrap-override
 

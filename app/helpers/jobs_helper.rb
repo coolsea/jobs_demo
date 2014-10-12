@@ -6,7 +6,7 @@ module JobsHelper
 
 
   def render_job_description(job)
-    job.description.to_markdown
+    sanitize(job.description.to_markdown)
   end
 
 
@@ -20,20 +20,25 @@ module JobsHelper
 
   def render_job_salary(salary)
 
-    special_label = if salary > 200000
+    special_label = if salary >= 200000
       "label-danger"
     elsif salary >= 100000
       "label-success"
     else
       ""
     end
-    content_tag(:span, "新台幣 $#{salary} 元", :class => "label label-default #{special_label}")
+
+    salary = number_to_currency(salary, precision: 0)
+
+    content_tag(:span, "新台幣 #{salary} 元", :class => "label label-default #{special_label}")
   end
 
   def render_job_fresh_state(job)
-    if job.created_on == Date.today
+    if job.created_on >= Date.today - 1.days
       content_tag(:span, "NEW", :class => "label label-success")
     end
+
+
   end
 
   def render_job_company_name(job)
@@ -43,6 +48,4 @@ module JobsHelper
       job.company_human_name
     end
   end
-
-
 end
