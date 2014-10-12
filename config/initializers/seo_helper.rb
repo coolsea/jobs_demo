@@ -1,5 +1,5 @@
 SeoHelper.configure do |config|
   config.skip_blank               = false
-  config.site_name = Setting.app_name
+  config.site_name = Settings.app_name
   config.default_page_description = "66K 工作網，提供 66K+ 優質好工作"
 end
