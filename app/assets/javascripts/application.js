@@ -15,4 +15,5 @@
 //= require bootstrap/dropdown
 //= require bootstrap/alert
 //= require bootstrap/modal
+//= require bootstrap/tab
 //= require bootstrap-markdown-bundle

@@ -8,7 +8,7 @@ RailsAdmin.config do |config|
   # end
   # config.current_user_method(&:current_user)
 
-  
+
   config.model 'Job' do
     edit do
       field :title
@@ -23,11 +23,12 @@ RailsAdmin.config do |config|
       field :higher_bound
       field :token
       field :is_published
-   
+      field :ip
+
     end
   end
-  
-  
+
+
   ## == Cancan ==
   # config.authorize_with :cancan
 
