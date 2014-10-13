@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141012140403) do
+ActiveRecord::Schema.define(version: 20141012223759) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 20141012140403) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "email_subscriptions", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "email_subscriptions", ["token"], name: "index_email_subscriptions_on_token"
 
   create_table "jobs", force: true do |t|
     t.string   "title"
@@ -43,6 +53,9 @@ ActiveRecord::Schema.define(version: 20141012140403) do
     t.datetime "email_confirmed_at"
   end
 
+  add_index "jobs", ["created_on"], name: "index_jobs_on_created_on"
+  add_index "jobs", ["ip", "created_on"], name: "index_jobs_on_ip_and_created_on"
+  add_index "jobs", ["ip"], name: "index_jobs_on_ip"
   add_index "jobs", ["is_published"], name: "index_jobs_on_is_published"
   add_index "jobs", ["token"], name: "index_jobs_on_token"
 

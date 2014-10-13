@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-
-  get "/pages/:action" , :controller => "pages"
-
   mount RailsAdmin::Engine => '/cadmin', as: 'rails_admin'
   root :to => "jobs#index"
 
@@ -25,5 +22,13 @@ Rails.application.routes.draw do
 
 
   resources :categories
+
+  resources :subscriptions do
+    member do
+      get :verify
+    end
+  end
+
+  get "/pages/:action" , :controller => "pages"
 
 end

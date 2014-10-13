@@ -1,7 +1,7 @@
 namespace :dev do
 
   desc "Rebuild system"
-  task :build => ["tmp:clear", "log:clear", "db:drop", "db:create", "db:migrate", "db:seed", "dev:demo", "dev:fake"]
+  task :build => ["tmp:clear", "log:clear", "db:drop", "db:create", "db:migrate", "db:seed", "dev:demo", "dev:fake", "dev:make_all_current_jobs_confirmed"]
 
   desc "create_base_category"
   task :demo => :environment do
