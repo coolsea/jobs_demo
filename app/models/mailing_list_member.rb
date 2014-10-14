@@ -28,6 +28,7 @@ class MailingListMember
         :subscribed => subscribed,
         :upsert => true
       )
+
     end
   end
 

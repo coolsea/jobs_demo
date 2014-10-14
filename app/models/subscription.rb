@@ -14,7 +14,7 @@ class Subscription
 
   def register
     if valid?
-      subscribe_to!("newspaper@66kjobs.tw")
+      subscribe_to!("jobs_demo@sandboxbbc35237adcf4754bf47784ef2c55cf5.mailgun.org")
     end
   end
 

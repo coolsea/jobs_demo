@@ -18,7 +18,7 @@ class SubscriptionsController < ApplicationController
   def verify
     @subscription = EmailSubscription.find_by_token(params[:id])
 
-    @subscription.subscribe_to!("newspaper@66kjobs.tw")
+    @subscription.subscribe_to!("jobs_demo@sandboxbbc35237adcf4754bf47784ef2c55cf5.mailgun.org")
 
     redirect_to root_path , :notice => "訂閱電子報成功"
   end
