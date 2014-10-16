@@ -23,9 +23,32 @@
         
         <li> <%= link_to("訂閱工作快遞", new_subscription_path) %> </li>
 
+        <% if signed_in? %>
+          <li id="fat-menu" class="dropdown">
+            <a href='#' class="dropdown-toggle" data-toggle="dropdown">Hi，<%= current_user.email %> <span class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <!--以下只有管理員才能看到功能-->
+              <%if current_user.is_admin? %>
 
-          </ul>
-        </li>
+                <li class="divider"></li>
+                <li> <%= link_to("所有使用者", "") %> </li>
+              <li> <%= link_to("管理員控制台", rails_admin_path) %> </li>
+              <% end %>
+
+              <li class="divider"></li>
+              <li>
+                <%= link_to("登出", destroy_user_session_path, :method => :delete ) %>
+              </li>
+            </ul>
+          </li>
+
+        <% else %>
+            <li><%= link_to("登入", new_user_session_path) %></li>
+        <% end %>
+
+        </ul>
+      </li>
 
 
       </ul>
