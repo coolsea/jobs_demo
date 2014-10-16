@@ -1,7 +1,7 @@
 namespace :dev do
 
   desc "Rebuild system"
-  task :build => ["tmp:clear", "log:clear", "db:drop", "db:create", "db:migrate", "db:seed", "dev:demo", "dev:fake", "dev:make_all_current_jobs_confirmed"]
+  task :build => ["tmp:clear", "log:clear", "db:drop", "db:create", "db:migrate", "db:seed", "dev:demo", "dev:fake"]
 
   desc "create_base_category"
   task :demo => :environment do
@@ -13,9 +13,8 @@ namespace :dev do
     Category.create!(:name => "行銷 / 企劃")
   end
 
-
   desc "make all current_jobs confirmed"
-  task :make_all_current_jobs_confirmed => :environment do
+  task :make_all_current_jobs_confirmed => :environment do 
     Job.find_each do |j|
       j.email_confirmed = true
       j.email_confirmed_at = Time.now
@@ -25,11 +24,10 @@ namespace :dev do
     end
   end
 
-
-  task :fake => :environment do
+  task :fake => :environment do 
 
     Category.all.each do |c|
-      5.times do
+      5.times do 
         create_job(c)
       end
     end
@@ -47,7 +45,7 @@ namespace :dev do
     job.company_name = "#{Faker::Name.first_name} Inc."
     job.email = Faker::Internet.email
     job.url = Faker::Internet.url
-    job.lower_bound = 30000
+    job.lower_bound = 30000 
     job.higher_bound = 66000 + rand(200000)
     job.is_published = true
     job.email_confirmed = true

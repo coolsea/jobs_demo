@@ -1,8 +1,4 @@
-class Job < ActiveRecord::Base
-
-
-  belongs_to :user
-  belongs_to :category, :counter_cache => true
+class DayJob < ActiveRecord::Base
 
   scope :published,  -> { where(:is_published => true ).where(:email_confirmed => true ) }
   scope :recent, -> { order("id DESC") }
@@ -21,15 +17,13 @@ class Job < ActiveRecord::Base
 
   validate :check_salary, fields: [:lower_bound, :higher_bound]
 
-
-
   def og_title
-    ERB::Util.h("#{title} - #{company_name} - 最高薪水 #{higher_bound}")
+    ERB::Util.h("（日薪專區）#{title} - #{company_name} - 最高日薪 #{higher_bound}")
   end
 
 
 
-  def check_salary
+ def check_salary
     if lower_bound.blank?
       errors.add(:lower_bound, "最低薪水不能為空")
     end
@@ -38,18 +32,18 @@ class Job < ActiveRecord::Base
       errors.add(:lower_bound, "最高薪水不能為空")
     end
 
-    if lower_bound.to_i < 30000
-      errors.add(:lower_bound, "最低薪不能低於 30000")
+    if lower_bound.to_i < 1800
+      errors.add(:lower_bound, "最低薪不能低於 1800")
     end
 
-    if higher_bound.to_i < 60000
-      errors.add(:lower_bound, "最高薪要超過 66000")
+    if higher_bound.to_i < 2200
+      errors.add(:lower_bound, "最高薪要超過 2200")
     end
 
-    if lower_bound.to_i > higher_bound.to_i
+    if lower_bound.to_i >= higher_bound.to_i
       errors.add(:lower_bound, "最高薪要能超過最低薪")
     end
-
   end
-
+  
+  
 end
